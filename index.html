@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Matrices</title>
+    <script src="https://cdn.plot.ly/plotly-2.4.2.min.js"></script>
+    <script src="main.js" defer></script>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;400;700&display=swap" rel="stylesheet">
+    <style>
+      body{
+        font-family: 'Roboto', sans-serif;
+        font-weight: lighter;
+        overflow: hidden;
+      }
+
+      #controlDiv{
+        /* border: 1px solid black; */
+        width: 30vw;
+        height: 40vw;
+        display: flex;
+        /* align-items: center; */
+        justify-content: space-between;
+        flex-direction: column;
+        float: left
+      }
+
+      .matrixInput{
+        display: inline-grid;
+        grid-template-columns: 1fr 1fr;
+        grid-row: 1fr 1fr;
+        grid-column-gap: 10px;
+        grid-row-gap: 10px;
+        width: 200px;
+        height: 150px;
+      }
+
+      .matrixWrapper{
+        /* height: 210px; */
+        background-color: lightgray;
+        width: 100%;
+        padding: 20px
+      }
+
+
+      .matrixBracket{
+        font-size: 180px;
+        font-weight: 100;
+        color: #3a3b3c
+      }
+
+
+      #graphDiv{
+        border: 30px solid lightgray;
+        width: 40vw;
+        height: 40vw;
+        float: right;
+      }
+
+      input{
+        min-width: 0;
+        font-size: 40px;
+        text-align: center;
+      }
+
+      p{
+        font-size: 20px;
+        font-weight: normal;
+        margin: 0
+      }
+
+    </style>
+  </head>
+  <body>
+    <div id="controlDiv">
+      <div class="matrixWrapper">
+      <p>Linear Transformation</p>
+      <!-- <span class="matrixBracket">[</span> -->
+      <div class="matrixInput">
+        <input value="1" class="matrixBox transformation" type="text" maxlength="5" oninput="this.value=this.value.replace(/[^0-9]-/g,'');" />
+        <input value="0" class="matrixBox transformation" type="text" maxlength="5" oninput="this.value=this.value.replace(/[^0-9]-/g,'');" />
+        <input value="0" class="matrixBox transformation" type="text" maxlength="5" oninput="this.value=this.value.replace(/[^0-9]-/g,'');" />
+        <input value="1" class="matrixBox transformation" type="text" maxlength="5" oninput="this.value=this.value.replace(/[^0-9]-/g,'');" />
+      </div>
+      <!-- <span class="matrixBracket">]</span> -->
+    </div>
+    <p id="determinantP">Determinant: 1</P>
+    <div class="matrixWrapper">
+      <p>Anticloclwise Rotation</p>
+      <!-- <span class="matrixBracket">[</span> -->
+      <input type="text" id="angle" />
+      <!-- <span class="matrixBracket">]</span> -->
+    </div>
+    </div>
+
+    <div id="inverseMatrix"></div>
+    </div>
+    <div id="graphDiv"></div>
+    <script>
+
+    </script>
+  </body>
+</html>
