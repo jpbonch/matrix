@@ -1,3 +1,4 @@
+var currentMatrix = [[1,0],[0,1]];
 function createPlot(){
   var layout = {
       autosize: true,
@@ -24,43 +25,18 @@ function createPlot(){
       },
       // height: 500,
       // width: 500,
-
-      shapes: [
-          {
-              type: 'square',
-              x0: 0,
-              y0: 0,
-              x1: 1,
-              y1: 1,
-              fillcolor: '#f4f4f4',
-              opacity: 1,
-              line: {
-                  width: 4
-              }
-          }
-        ]
   }
   Plotly.newPlot('graphDiv', [], layout, {displaylogo: false, modeBarButtonsToRemove: ['autoScale2d', 'toImage', 'zoom2d', 'pan2d']});
 }
 
 
 
-function multiplyMatrices(m1, m2) {
-    var result = [];
-    for (var i = 0; i < m1.length; i++) {
-        result[i] = [];
-        for (var j = 0; j < m2[0].length; j++) {
-            var sum = 0;
-            for (var k = 0; k < m1[0].length; k++) {
-                sum += m1[i][k] * m2[k][j];
-            }
-            result[i][j] = sum;
-        }
-    }
-    return result;
+function multiplyPointByMatrix(matrix, point) {
+    return [(matrix[0][0] * point[0]) + (matrix[0][1] * point[1]), 
+            (matrix[1][0] * point[0]) + (matrix[1][1] * point[1])]
 }
 
-function determinante(a) {
+function determinant(a) {
     var order = a.length;
     if (order === 1) {
         return a[0][0];
@@ -88,77 +64,69 @@ function cofactor(a, line, column) {
         }
         m++;
     }
-    return (column % 2 ? -1 : 1) * determinante(sub_matrix);
+    return (column % 2 ? -1 : 1) * determinant(sub_matrix);
 }
-function handleTransformation(currentMatrix){
-  if (currentMatrix[0].includes("") || currentMatrix[1].includes("")){
+function handleTransformation(){
+  var matrixBoxes = document.querySelectorAll(".transformation");
+  var newMatrix = [[matrixBoxes[0].value, matrixBoxes[1].value],[matrixBoxes[2].value,matrixBoxes[3].value]]
+  currentMatrix = newMatrix;
+  updatePlot();
+  document.getElementById("determinantP").innerText = "Determinant: " + determinant(currentMatrix);
+}
 
-  }
-  var newMatrix = multiplyMatrices([[1,0],[0,1]], currentMatrix);
+function updatePlot(){
+  var xy0 = multiplyPointByMatrix(currentMatrix,[0,0])
+  var xy1 = multiplyPointByMatrix(currentMatrix,[0,1]) // cahnge [1,1]
+  var xy2 = multiplyPointByMatrix(currentMatrix,[1,0])
+  var xy3 = multiplyPointByMatrix(currentMatrix,[1,1])
+  console.log(xy1)
   Plotly.update('graphDiv', [], {
     shapes: [
+        // {
+        //     x0: xy0[0],
+        //     y0: xy0[1],
+        //     x1: xy1[0],
+        //     y1: xy1[1],
+        //     fillcolor: '#f4f4f4',
+        //     opacity: 1,
+        //     line: {
+        //         width: 4
+        //     }
+        // }
         {
-            type: 'square',
-            x0: newMatrix[0][0],
-            y0: newMatrix[1][0],
-            x1: newMatrix[0][1],
-            y1: newMatrix[1][1],
-            fillcolor: '#f4f4f4',
-            opacity: 1,
-            line: {
-                width: 4
-            }
+          type: 'path',
+          path: `M${xy0[0]},${xy0[1]} L${xy1[0]},${xy1[1]} L${xy3[0]},${xy3[1]} L${xy2[0]},${xy2[1]} L${xy0[0]},${xy0[1]}`, 
+          fillcolor: 'rgba(255, 140, 184, 0.5)',
+          line: {
+            color: 'rgb(255, 140, 184)'
+          }
         }
       ]
   })
-  document.getElementById("determinantP").innerText = "Determinant: " + determinante(newMatrix);
-}
-
-function getCurrentMatrix(){
-  var matrixBoxes = document.querySelectorAll(".transformation");
-  return [[matrixBoxes[0].value, matrixBoxes[1].value], [matrixBoxes[2].value, matrixBoxes[3].value]];
 }
 
 function handleRotation(event){
   var angle = event.currentTarget.value;
-  var rotationMatrix = [[Math.cos(angle), -Math.sin(angle)], [Math.sin(angle), Math.cos(angle)]];
-  console.log(rotationMatrix)
-  var newMatrix = multiplyMatrices([[1,0],[0,1]], rotationMatrix);
-  Plotly.update('graphDiv', [], {
-    shapes: [
-        {
-            type: 'square',
-            x0: newMatrix[0][0],
-            y0: newMatrix[1][0],
-            x1: newMatrix[0][1],
-            y1: newMatrix[1][1],
-            fillcolor: '#f4f4f4',
-            opacity: 1,
-            line: {
-                width: 4
-            }
-        }
-      ]
-  })
+  var rotationMatrix = [[Math.cos(angle * Math.PI / 180), -Math.sin(angle * Math.PI / 180)],
+                        [Math.sin(angle * Math.PI / 180), Math.cos(angle * Math.PI / 180)]];
+  currentMatrix = rotationMatrix;
+  updatePlot();
   var matrixBoxes = document.querySelectorAll(".transformation");
-  matrixBoxes[0].value = newMatrix[0][0];
-  matrixBoxes[1].value = newMatrix[1][0]
-  matrixBoxes[2].value = newMatrix[0][1];
-  matrixBoxes[3].value = newMatrix[1][1]
-
-  document.getElementById("determinantP").innerText = "Determinant: " + determinante(newMatrix);
+  matrixBoxes[0].value = currentMatrix[0][0];
+  matrixBoxes[1].value = currentMatrix[0][1];
+  matrixBoxes[2].value = currentMatrix[1][0];
+  matrixBoxes[3].value = currentMatrix[1][1];
+  document.getElementById("determinantP").innerText = "Determinant: " + determinant(rotationMatrix);
 }
 
 
 
 function main(){
   createPlot();
-  var currentMatrix = [[1,0],[0,1]];
+  updatePlot()
   var matrixBoxes = document.querySelectorAll(".transformation");
   for (box of matrixBoxes){
-    box.addEventListener("change", () => {
-      handleTransformation(currentMatrix);
-    }, false);
+    box.addEventListener("change", () => {handleTransformation()}, false);
   }
 
   document.getElementById("angle").addEventListener("change", handleRotation, false)
