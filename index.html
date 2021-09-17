@@ -5,14 +5,18 @@
     <title>Matrices</title>
     <script src="https://cdn.plot.ly/plotly-2.4.2.min.js"></script>
     <script src="main.js" defer></script>
+    <script src="calculator.js" defer></script>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;400;700&display=swap" rel="stylesheet">
     <style>
       body{
         font-family: 'Roboto', sans-serif;
         font-weight: lighter;
-        overflow: hidden;
-        width: 70%;
+        overflow-x: hidden;
+        /* width: 33%; */
         margin: auto;
+        display: flex;
+        justify-content: center;
+        font-weight: 400;
       }
 
       .matrixInput{
@@ -23,31 +27,38 @@
         grid-row-gap: 10px;
         width: 200px;
         height: 150px;
+        margin-top: -23px;
       }
 
       .matrixWrapper{
         /* height: 210px; */
         background-color: lightgray;
-        width: 100%;
+        width: 320px;
         padding: 20px;
         border-radius: 30px;
+        margin: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
       }
 
 
       .matrixBracket{
-        font-size: 180px;
+        font-size: 150px;
         font-weight: 100;
-        color: #3a3b3c
+        color: #3a3b3c;
+        text-align: center;
+        margin: 10px;
+        margin-top: -17px;
       }
 
 
       #graphDiv{
         border: 30px solid lightgray;
-        width: 800px;
-        height: 800px;
+        width: 300px;
+        height: 300px;
         border-radius: 30px;
-        margin-right: 50px;
-        margin: auto;
+        margin: 20px;
       }
 
       input{
@@ -66,21 +77,84 @@
         border-radius: 10px !important;
       }
 
+      .determinantP{
+        margin-top: -10px;
+      }
+/* 
       #rightColumn{
         float: left;
-        width: 50%;
+        width: 45%;
+        margin-top: 30px;
       }
 
       #leftColumn{
         float: left;
-        width: 50%;
+        width: 45%;
+        margin-right: 0px;
+        margin-top: 30px;
+      } */
+
+      #angle{
+        width: 200px
       }
+
+      .boxy{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 40px;
+      }
+
+      .fullMatrix{
+        display: flex;
+        justify-content: left;
+        align-items: center;
+        
+      }
+
 
     </style>
   </head>
   <body>
     <div id="leftColumn">
-      <div class="matrixWrapper"></div>
+      <div class="matrixWrapper">
+        <p>Matrix Calculator</p>
+        <div class="fullMatrix">
+          <span class="matrixBracket">[</span>
+        <div class="matrixInput">
+          <input value="1" class="matrixBox calculation" type="text" oninput="this.value=this.value.replace(/[^0-9]-/g,'');" />
+          <input value="0" class="matrixBox calculation" type="text" oninput="this.value=this.value.replace(/[^0-9]-/g,'');" />
+          <input value="0" class="matrixBox calculation" type="text" oninput="this.value=this.value.replace(/[^0-9]-/g,'');" />
+          <input value="1" class="matrixBox calculation" type="text" oninput="this.value=this.value.replace(/[^0-9]-/g,'');" />
+        </div>
+        <span class="matrixBracket">]</span>
+      </div>
+        <p class="determinantP" id="determinantPe">Determinant = 1</p>
+        <br><br>
+        <p>Inverse Matrix</p>
+        <div class="fullMatrix">
+          <span class="matrixBracket">[</span>
+        <div class="matrixInput">
+          <span class="boxy inverse">1</span>
+          <span class="boxy inverse">0</span>
+          <span class="boxy inverse">0</span>
+          <span class="boxy inverse">1</span>
+        </div>
+        <span class="matrixBracket">]</span>
+        </div>
+        <br>
+        <p>Transpose</p>
+        <div class="fullMatrix">
+          <span class="matrixBracket">[</span>
+        <div class="matrixInput">
+          <span class="boxy transpose">1</span>
+          <span class="boxy transpose">0</span>
+          <span class="boxy transpose">0</span>
+          <span class="boxy transpose">1</span>
+        </div>
+        <span class="matrixBracket">]</span>
+        </div>
+      </div>
 
     </div>
 
@@ -90,14 +164,18 @@
       <div class="matrixWrapper">
       <p>Linear Transformation</p>
       <!-- <span class="matrixBracket">[</span> -->
+      <div class="fullMatrix">
+      <span class="matrixBracket">[</span>
       <div class="matrixInput">
         <input value="1" class="matrixBox transformation" type="text" oninput="this.value=this.value.replace(/[^0-9]-/g,'');" />
         <input value="0" class="matrixBox transformation" type="text" oninput="this.value=this.value.replace(/[^0-9]-/g,'');" />
         <input value="0" class="matrixBox transformation" type="text" oninput="this.value=this.value.replace(/[^0-9]-/g,'');" />
         <input value="1" class="matrixBox transformation" type="text" oninput="this.value=this.value.replace(/[^0-9]-/g,'');" />
       </div>
+      <span class="matrixBracket">]</span>
+    </div>
       <!-- <span class="matrixBracket">]</span> -->
-      <p id="determinantP">Determinant: 1</P>
+      <p id="determinantP" class="determinantP">Determinant = 1</P>
     </div>
     
     <div class="matrixWrapper">

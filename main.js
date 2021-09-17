@@ -116,7 +116,7 @@ function handleRotation(event){
   matrixBoxes[1].value = currentMatrix[0][1];
   matrixBoxes[2].value = currentMatrix[1][0];
   matrixBoxes[3].value = currentMatrix[1][1];
-  document.getElementById("determinantP").innerText = "Determinant: " + determinant(rotationMatrix);
+  document.getElementById("determinantP").innerText = "Determinant = " + determinant(rotationMatrix);
 }
 
 
