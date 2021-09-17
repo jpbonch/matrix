@@ -80,7 +80,7 @@
       .determinantP{
         margin-top: -10px;
       }
-/* 
+/*
       #rightColumn{
         float: left;
         width: 45%;
@@ -109,7 +109,7 @@
         display: flex;
         justify-content: left;
         align-items: center;
-        
+
       }
 
 
@@ -122,10 +122,10 @@
         <div class="fullMatrix">
           <span class="matrixBracket">[</span>
         <div class="matrixInput">
-          <input value="1" class="matrixBox calculation" type="text" oninput="this.value=this.value.replace(/[^0-9]-/g,'');" />
-          <input value="0" class="matrixBox calculation" type="text" oninput="this.value=this.value.replace(/[^0-9]-/g,'');" />
-          <input value="0" class="matrixBox calculation" type="text" oninput="this.value=this.value.replace(/[^0-9]-/g,'');" />
-          <input value="1" class="matrixBox calculation" type="text" oninput="this.value=this.value.replace(/[^0-9]-/g,'');" />
+          <input value="1" class="matrixBox calculation" maxlength="5" type="text" oninput="this.value=this.value.replace(/[^0-9]-/g,'');" />
+          <input value="0" class="matrixBox calculation" maxlength="5" type="text" oninput="this.value=this.value.replace(/[^0-9]-/g,'');" />
+          <input value="0" class="matrixBox calculation" maxlength="5" type="text" oninput="this.value=this.value.replace(/[^0-9]-/g,'');" />
+          <input value="1" class="matrixBox calculation" maxlength="5" type="text" oninput="this.value=this.value.replace(/[^0-9]-/g,'');" />
         </div>
         <span class="matrixBracket">]</span>
       </div>
@@ -177,7 +177,7 @@
       <!-- <span class="matrixBracket">]</span> -->
       <p id="determinantP" class="determinantP">Determinant = 1</P>
     </div>
-    
+
     <div class="matrixWrapper">
       <p>Anticlockwise Rotation</p>
       <!-- <span class="matrixBracket">[</span> -->
@@ -186,6 +186,6 @@
     </div>
     <div id="graphDiv"></div>
     </div>
-    
+
   </body>
 </html>
